@@ -60,11 +60,6 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) vel.y = -Speed;
 
         RB.velocity = vel;
-
-        if (transform.position.x > 17.5f) transform.position = new Vector3(-17.5f, transform.position.y, 0);
-        if (transform.position.x < -17.5f) transform.position = new Vector3(17.5f, transform.position.y, 0);
-        if (transform.position.y > 11f) transform.position = new Vector3(transform.position.x, -11f, 0);
-        if (transform.position.y < -11f) transform.position = new Vector3(transform.position.x, 11f, 0);
     }
 
     private void UpdateRotation()

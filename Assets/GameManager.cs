@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour
     public List<StalkerEnemyScript> StalkerEnemies;
     public List<BulletScript> bullets;
 
-    public AudioSource AdminAudio;
-
     void Start()
     {
         currentTime = countdownTime;
@@ -27,11 +25,14 @@ public class GameManager : MonoBehaviour
         timerText.color = Color.white;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         currentTime += Time.deltaTime;
 
         UpdateTimerUI();
+
+        transform.position = Vector3.Lerp(transform.position,
+            new Vector3(Player.transform.position.x, Player.transform.position.y, -10), .05f);
     }
 
     void UpdateGameSettings(float bulletSpeed, float shootCooldown, float minSpawnRate,

@@ -29,6 +29,8 @@ public class EnemySpawner : MonoBehaviour
             SpawnTankEnemy();
             SpawnStalkerEnemy();
 
+            //SpawnEnemy();
+
         }
     }
 
@@ -43,6 +45,11 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject tankenemy = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
 
+        // getcomponent off of whatever enemy to spawn is
+        // if it has the TankEnemyScript, do that
+        // else if it has the StalkerEnemy, do that
+        // else Normal do that
+        
         TankEnemyScript tankenemyScript = tankenemy.GetComponent<TankEnemyScript>();
         if (tankenemyScript != null)
         {

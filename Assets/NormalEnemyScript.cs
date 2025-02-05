@@ -12,8 +12,6 @@ public class NormalEnemyScript : MonoBehaviour
     public float NormalHealth = 5;
     public PlayerScript player;
 
-    //public List<AudioClip> ded;
-
     public void SetTarget(Transform playerTransform)
     {
         target = playerTransform;

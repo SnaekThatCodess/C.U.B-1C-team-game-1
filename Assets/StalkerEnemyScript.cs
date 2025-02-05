@@ -7,8 +7,6 @@ public class StalkerEnemyScript : MonoBehaviour
     private Transform target;
     public float StalkerHealth = 3;
 
-    //public List<AudioClip> ded;
-
     public void SetTarget(Transform playerTransform)
     {
         target = playerTransform;

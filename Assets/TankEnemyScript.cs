@@ -7,8 +7,6 @@ public class TankEnemyScript : MonoBehaviour
     private Transform target;
     public float TankHealth = 10;
 
-    //public List<AudioClip> ded;
-
     public void SetTarget(Transform playerTransform)
     {
         target = playerTransform;
