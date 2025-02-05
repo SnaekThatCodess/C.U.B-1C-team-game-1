@@ -112,21 +112,22 @@ public class PlayerScript : MonoBehaviour
         NormalEnemyScript normalenemy = other.gameObject.GetComponent<NormalEnemyScript>();
         if (normalenemy != null)
         {
-            normalenemy.GetBumped(this);
+            normalenemy.GetBumped();
             Die();
         }
         
         TankEnemyScript tankenemy = other.gameObject.GetComponent<TankEnemyScript>();
         if (tankenemy != null)
         {
-            tankenemy.GetBumped(this);
+            tankenemy.GetBumped();
             Die();
         }
         
         StalkerEnemyScript stalkerenemy = other.gameObject.GetComponent<StalkerEnemyScript>();
         if (stalkerenemy != null)
         {
-            stalkerenemy.GetBumped(this);
+            stalkerenemy.GetBumped();
+            Health--;
             Die();
         }
     }

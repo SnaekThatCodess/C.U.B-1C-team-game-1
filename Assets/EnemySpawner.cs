@@ -18,8 +18,8 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator SpawnEnemies()
     {
         float spawnInterval = Random.Range(MinSpawnRate, MaxSpawnRate);
-        SpawnEnemy();
         yield return new WaitForSeconds(spawnInterval);
+        SpawnEnemy();
     }
 
     private void SpawnEnemy()
@@ -30,6 +30,7 @@ public class EnemySpawner : MonoBehaviour
         float offsetY = Random.Range(-SpawnAreaSize, SpawnAreaSize);
         Vector3 spawnPosition = transform.position + new Vector3(offsetX, offsetY, 0);
         Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+        StartCoroutine(SpawnEnemies());
     }
 
     private void Update()

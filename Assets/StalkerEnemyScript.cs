@@ -6,32 +6,35 @@ public class StalkerEnemyScript : MonoBehaviour
     public float speed = 10f;
     private Transform target;
     public float StalkerHealth = 3;
+    public GameObject player;
 
-    public void SetTarget(Transform playerTransform)
+    public PlayerScript pc;
+
+    public void Start()
     {
-        target = playerTransform;
+        player=GameObject.Find("player");
+        pc = player.GetComponent<PlayerScript>();
     }
 
-    private void Update()
+    public void Update()
     {
-        if (target != null)
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * (speed * Time.deltaTime);
-        }
-    }
-
-    public void GetBumped(PlayerScript player)
-    {
+        target = player.transform;
+        Vector3 direction = (target.position - transform.position).normalized;
+        transform.position += direction * (speed * Time.deltaTime);
         if (StalkerHealth <= 1)
         {
             Destroy(gameObject);
-            player.Score += 3;
-            player.UpdateScore();
         }
-        else
-        {
-            StalkerHealth--;
-        }
+    }
+
+    public void GetBumped()
+    {
+        Destroy(gameObject);
+    }
+
+    public void OnDestroy()
+    {
+        pc.Score += 1;
+        pc.UpdateScore();
     }
 }

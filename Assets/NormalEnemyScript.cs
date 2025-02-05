@@ -12,10 +12,13 @@ public class NormalEnemyScript : MonoBehaviour
     private Transform target;
     public float NormalHealth = 5;
     public GameObject player;
+    
+    public PlayerScript pc;
 
     public void Start()
     {
         player=GameObject.Find("player");
+        pc = player.GetComponent<PlayerScript>();
     }
 
     public void Update()
@@ -23,19 +26,20 @@ public class NormalEnemyScript : MonoBehaviour
         target = player.transform;
         Vector3 direction = (target.position - transform.position).normalized;
         transform.position += direction * (speed * Time.deltaTime);
-    }
-
-    public void GetBumped(PlayerScript player)
-    {
         if (NormalHealth <= 1)
         {
             Destroy(gameObject);
-            player.Score += 1;
-            player.UpdateScore();
         }
-        else
-        {
-            NormalHealth--;
-        }
+    }
+
+    public void GetBumped()
+    {
+        Destroy(gameObject);
+    }
+
+    public void OnDestroy()
+    {
+        pc.Score += 1;
+        pc.UpdateScore();
     }
 }

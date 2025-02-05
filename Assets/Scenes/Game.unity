@@ -2163,7 +2163,7 @@ MonoBehaviour:
   HealthText: {fileID: 1581577853}
   HighscoreText: {fileID: 2115698556}
   WaveText: {fileID: 1491258754}
-  Speed: 10
+  Speed: 6
   Score: 0
   Health: 20
   Wave: 1
