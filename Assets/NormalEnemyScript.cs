@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 using System.Collections;
@@ -10,20 +11,18 @@ public class NormalEnemyScript : MonoBehaviour
     public float speed = 4f;
     private Transform target;
     public float NormalHealth = 5;
-    public PlayerScript player;
+    public GameObject player;
 
-    public void SetTarget(Transform playerTransform)
+    public void Start()
     {
-        target = playerTransform;
+        player=GameObject.Find("player");
     }
 
-    private void Update()
+    public void Update()
     {
-        if (target != null)
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * (speed * Time.deltaTime);
-        }
+        target = player.transform;
+        Vector3 direction = (target.position - transform.position).normalized;
+        transform.position += direction * (speed * Time.deltaTime);
     }
 
     public void GetBumped(PlayerScript player)
