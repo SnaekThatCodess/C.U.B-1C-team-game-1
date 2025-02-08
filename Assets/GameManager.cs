@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using Color = UnityEngine.Color;
 
 public class GameManager : MonoBehaviour

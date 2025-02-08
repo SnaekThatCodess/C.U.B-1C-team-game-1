@@ -35,7 +35,6 @@ public class BulletScript : MonoBehaviour
         NormalEnemyScript normalenemy = other.GetComponent < NormalEnemyScript>();
         if (normalenemy != null)
         {
-            //normalenemy.GetBumped();
             normalenemy.NormalHealth--;
             Destroy(gameObject);
         }
@@ -43,7 +42,6 @@ public class BulletScript : MonoBehaviour
         TankEnemyScript tankenemy = other.GetComponent < TankEnemyScript>();
         if (tankenemy != null)
         {
-            //tankenemy.GetBumped();
             tankenemy.TankHealth--;
             Destroy(gameObject);
         }
@@ -51,7 +49,6 @@ public class BulletScript : MonoBehaviour
         StalkerEnemyScript stalkerenemy = other.GetComponent < StalkerEnemyScript>();
         if (stalkerenemy != null)
         {
-            //stalkerenemy.GetBumped();
             stalkerenemy.StalkerHealth--;
             Destroy(gameObject);
         }
