@@ -7,6 +7,12 @@ public class NormalEnemyScript : MonoBehaviour
     private Transform target;
     public float NormalHealth = 5;
     public GameObject player;
+    public GameObject turret;
+    public Animator anim;
+    public Vector2 targetaim;
+    public Vector2 targetPos;
+    public Vector2 thisPos;
+    public float angle;
 
     public PlayerScript pc;
 
@@ -23,6 +29,7 @@ public class NormalEnemyScript : MonoBehaviour
 
         randomShootInterval = Random.Range(2f, 5f);
         nextShootTime = Time.time + randomShootInterval;
+        anim.Play("normaldrive");
     }
 
     public void Update()
@@ -42,6 +49,22 @@ public class NormalEnemyScript : MonoBehaviour
             randomShootInterval = Random.Range(2f, 5f);
             nextShootTime = Time.time + randomShootInterval;
         }
+        
+        
+        targetaim = new Vector2(target.transform.position.x,target.transform.position.y);
+        targetPos = targetaim;
+        thisPos = transform.position;
+        targetPos.x = targetPos.x - thisPos.x;
+        targetPos.y = targetPos.y - thisPos.y;
+        angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f;
+        turret.transform.rotation = Quaternion.Euler(0, 0, angle+90);
+        targetaim = Vector2.up;
+        targetPos = targetaim;
+        thisPos = transform.position;
+        targetPos.x = targetPos.x - thisPos.x;
+        targetPos.y = targetPos.y - thisPos.y;
+        angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f;
+        transform.rotation = Quaternion.Euler(0, 0, angle+90);
     }
 
     public void GetBumped()
@@ -57,6 +80,8 @@ public class NormalEnemyScript : MonoBehaviour
 
     public void Shoot()
     {
+        
+        anim.Play("normalshoot");
         if (NormalBulletPrefab != null)
         {
             Quaternion bulletRotation = normalCenter.rotation;

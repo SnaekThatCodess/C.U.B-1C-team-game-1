@@ -34,6 +34,12 @@ public class PlayerScript : MonoBehaviour
     public float nextShootTime = 0f;
     
     public Transform playerCenter;
+    public GameObject turret;
+    public Animator anim;
+    public Vector2 targetaim;
+    public Vector2 targetPos;
+    public Vector2 thisPos;
+    public float angle;
 
     private void Start()
     {
@@ -48,6 +54,13 @@ public class PlayerScript : MonoBehaviour
         HandleShooting();
         UpdateHighscore();
         UpdateRotation();
+        targetaim = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        targetPos = targetaim;
+        thisPos = transform.position;
+        targetPos.x = targetPos.x - thisPos.x;
+        targetPos.y = targetPos.y - thisPos.y;
+        angle = Mathf.LerpAngle(angle,Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f,0.03f);
+        turret.transform.rotation = Quaternion.Euler(0, 0, angle+90);
     }
 
     private void HandleMovement()
@@ -60,6 +73,7 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) vel.y = -Speed;
 
         RB.velocity = vel;
+        anim.Play("playerdrive");
     }
 
     private void UpdateRotation()
@@ -89,6 +103,7 @@ public class PlayerScript : MonoBehaviour
 
     public void Shoot()
     {
+        anim.Play("playershoot");
         if (BulletPrefab != null)
         {
             Quaternion bulletRotation = playerCenter.rotation;

@@ -7,6 +7,12 @@ public class TankEnemyScript : MonoBehaviour
     private Transform target;
     public float TankHealth = 10;
     public GameObject player;
+    public GameObject turret;
+    public Animator anim;
+    public Vector2 targetaim;
+    public Vector2 targetPos;
+    public Vector2 thisPos;
+    public float angle;
 
     public PlayerScript pc;
 
@@ -36,6 +42,7 @@ public class TankEnemyScript : MonoBehaviour
 
     void Update()
     {
+        
         normalBulletTimer -= Time.deltaTime;
         
         target = player.transform;
@@ -51,12 +58,28 @@ public class TankEnemyScript : MonoBehaviour
         {
             HandleShooting();
         }
+
+        targetaim = new Vector2(target.transform.position.x,target.transform.position.y);
+        targetPos = targetaim;
+        thisPos = transform.position;
+        targetPos.x = targetPos.x - thisPos.x;
+        targetPos.y = targetPos.y - thisPos.y;
+        angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f;
+        turret.transform.rotation = Quaternion.Euler(0, 0, angle+90);
+        targetaim = Vector2.up;
+        targetPos = targetaim;
+        thisPos = transform.position;
+        targetPos.x = targetPos.x - thisPos.x;
+        targetPos.y = targetPos.y - thisPos.y;
+        angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void HandleShooting()
     {
         if (Time.time >= nextShootTime)
         {
+            anim.Play("tankshoot");
             Shoot();
             nextShootTime = Time.time + shootCooldown;
         }
