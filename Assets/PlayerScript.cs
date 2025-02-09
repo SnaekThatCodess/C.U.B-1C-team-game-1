@@ -40,6 +40,13 @@ public class PlayerScript : MonoBehaviour
     public Vector2 targetPos;
     public Vector2 thisPos;
     public float angle;
+    
+    public float Dash;
+    public float MaxDash = 100;
+    public float DashTimer;
+    public float DashRecoverTimer;
+    public PlayerDashScript PlayerDash;
+    public float SpeedMultiplier;
 
     private void Start()
     {
@@ -62,6 +69,94 @@ public class PlayerScript : MonoBehaviour
         targetPos.y = targetPos.y - thisPos.y;
         angle = Mathf.LerpAngle(angle,Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f,0.03f);
         turret.transform.rotation = Quaternion.Euler(0, 0, angle+90);
+        
+        //dash code
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            if (RS != RunState.DashRecover)
+            {
+                RS = RunState.DashActive;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.RightShift))
+        {
+            if (RS != RunState.DashRecover)
+            {
+                RS = RunState.DashReady;
+            }
+    
+            if (Dash == 0)
+            {
+                RS = RunState.DashReady;
+                DashTimer = 5;
+            }
+        }
+
+        if (SpeedMultiplier > 1)
+        {
+            SpeedMultiplier = 1;
+        }
+        
+        if (SpeedMultiplier < 0)
+        {
+            SpeedMultiplier = 0;
+        }
+
+        //RB.velocity = vel;
+        
+        UpdateStamina();
+    }
+    
+    public RunState RS;
+
+    public float GetSpeed()
+    {
+        if (RS == RunState.DashReady) return 6 * SpeedMultiplier;
+        else if (RS == RunState.DashActive) return 12.5f * SpeedMultiplier;
+        else if (RS == RunState.DashRecover) return 3f;
+        return 3  * SpeedMultiplier;
+    }
+    
+    public enum RunState
+    {
+        DashReady,
+        DashActive,
+        DashRecover,
+    }
+
+    public void UpdateStamina()
+    {
+        if (RS == RunState.DashActive)
+        {
+            Dash -= Time.deltaTime * (100/4f);
+        }
+        
+        if (RS == RunState.DashReady)
+        {
+            Dash += Time.deltaTime * (100/7f);
+        }
+
+        if (RS == RunState.DashRecover)
+        {
+            DashRecoverTimer -= Time.deltaTime;
+            Dash += Time.deltaTime * (100/5f);
+            if (DashRecoverTimer <= 0)
+            {
+                RS = RunState.DashReady;
+                Dash = 100;
+            }
+        }
+
+        if (Dash > 100)
+        {
+            Dash = 100;
+        }
+        if (Dash < 0)
+        {
+            Dash = 0;
+            RS = RunState.DashRecover;
+            DashRecoverTimer = 5;
+        }
     }
 
     private void HandleMovement()
@@ -79,17 +174,19 @@ public class PlayerScript : MonoBehaviour
 
     private void UpdateRotation()
     {
-        playerCenter.Rotate(0,0,0);
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            playerCenter.Rotate(0, 0, 300 * Time.deltaTime);
-        }
-      
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            playerCenter.Rotate(0,0,-300 * Time.deltaTime);
-        }
+        //**lets change it so that the player turns in the way its moving**
+        
+        // playerCenter.Rotate(0,0,0);
+        //
+        // if (Input.GetKey(KeyCode.LeftArrow))
+        // {
+        //     playerCenter.Rotate(0, 0, 300 * Time.deltaTime);
+        // }
+        //
+        // if (Input.GetKey(KeyCode.RightArrow))
+        // {
+        //     playerCenter.Rotate(0,0,-300 * Time.deltaTime);
+        // }
 
     }
 
@@ -169,7 +266,7 @@ public class PlayerScript : MonoBehaviour
 
     public void Die()
     {
-        if (Health <= 1)
+        if (Health < 1)
         {
             Speed = 0;
             SR.color = Color.white;
