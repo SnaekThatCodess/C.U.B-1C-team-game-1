@@ -364,11 +364,7 @@ MonoBehaviour:
   thisPos: {x: 0, y: 0}
   angle: 0
   pc: {fileID: 0}
-  TankBulletPrefabs:
-  - {fileID: 1458136185733051430, guid: 31c7bb35253bb374d98b6642834a3dad, type: 3}
-  - {fileID: 5353825155229907908, guid: 5113be549ea083c47acedb3cf6e511cc, type: 3}
-  - {fileID: 408423814634242178, guid: c900dedcb87703044bfe253261584b61, type: 3}
-  - {fileID: 5290148360405633700, guid: bbd34f76a26bca046a8dac5271132c77, type: 3}
+  TankBulletPrefab: {fileID: 3941914166409597600, guid: c3f7162c07cec834997553f97094b2e1, type: 3}
   shootCooldown: 3
   nextShootTime: 1
   tankCenter: {fileID: 6339612745439590567}

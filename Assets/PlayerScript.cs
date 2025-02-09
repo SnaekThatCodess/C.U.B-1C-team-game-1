@@ -54,6 +54,7 @@ public class PlayerScript : MonoBehaviour
         HandleShooting();
         UpdateHighscore();
         UpdateRotation();
+        //my stuff below this
         targetaim = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         targetPos = targetaim;
         thisPos = transform.position;

@@ -16,7 +16,7 @@ public class TankEnemyScript : MonoBehaviour
 
     public PlayerScript pc;
 
-    public GameObject[] TankBulletPrefabs;
+    public GameObject TankBulletPrefab;
 
     public float shootCooldown = 3f;
     public float nextShootTime = 1f;
@@ -72,7 +72,7 @@ public class TankEnemyScript : MonoBehaviour
         targetPos.x = targetPos.x - thisPos.x;
         targetPos.y = targetPos.y - thisPos.y;
         angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = Quaternion.Euler(0, 0, angle-90);
     }
 
     private void HandleShooting()
@@ -98,29 +98,27 @@ public class TankEnemyScript : MonoBehaviour
 
     public void Shoot()
     {
-        if (TankBulletPrefabs.Length > 0)
+        Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+
+        foreach (float angle in spreadAngles)
         {
-            Vector3 playerDirection = (player.transform.position - transform.position).normalized;
+            Quaternion spreadRotation = Quaternion.Euler(0, 0, angle); 
+            Vector3 spreadDirection = spreadRotation * playerDirection;
+                
+            GameObject bullet = Instantiate(TankBulletPrefab,tankCenter);
+            BulletTankScript bulletScript = bullet.GetComponent<BulletTankScript>();
 
-            foreach (float angle in spreadAngles)
-            {
-                Quaternion spreadRotation = Quaternion.Euler(0, 0, angle); 
-                Vector3 spreadDirection = spreadRotation * playerDirection;
+            bulletScript.Initialize(this);
 
-                GameObject bullet = new GameObject("TankBullet");
-                BulletTankScript bulletScript = bullet.AddComponent<BulletTankScript>();
+            bulletScript.SetDirection(spreadDirection);
 
-                bulletScript.Initialize(this);
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.velocity = spreadDirection * bulletScript.Speed;
 
-                bulletScript.SetDirection(spreadDirection);
+            bullet.transform.position = transform.position + tankCenter.up * 2f;
 
-                Rigidbody2D rb = bullet.AddComponent<Rigidbody2D>();
-                rb.velocity = spreadDirection * bulletScript.Speed;
-
-                bullet.transform.position = transform.position + tankCenter.up * 2f;
-
-                Destroy(bullet, bulletScript.Lifetime);
-            }
+            Destroy(bullet, bulletScript.Lifetime);
         }
+    
     }
 }
