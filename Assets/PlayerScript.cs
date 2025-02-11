@@ -46,7 +46,7 @@ public class PlayerScript : MonoBehaviour
     public float DashTimer;
     public float DashRecoverTimer;
     public PlayerDashScript PlayerDash;
-    public float SpeedMultiplier;
+    public float SpeedMultiplier = 1;
 
     private void Start()
     {
@@ -61,7 +61,7 @@ public class PlayerScript : MonoBehaviour
         HandleShooting();
         UpdateHighscore();
         UpdateRotation();
-        //my stuff below this
+        
         targetaim = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         targetPos = targetaim;
         thisPos = transform.position;
@@ -70,7 +70,6 @@ public class PlayerScript : MonoBehaviour
         angle = Mathf.LerpAngle(angle,Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f,0.03f);
         turret.transform.rotation = Quaternion.Euler(0, 0, angle+90);
         
-        //dash code
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             if (RS != RunState.DashRecover)
@@ -88,7 +87,7 @@ public class PlayerScript : MonoBehaviour
             if (Dash == 0)
             {
                 RS = RunState.DashReady;
-                DashTimer = 5;
+                DashTimer = 10;
             }
         }
 
@@ -102,19 +101,30 @@ public class PlayerScript : MonoBehaviour
             SpeedMultiplier = 0;
         }
 
-        //RB.velocity = vel;
-        
-        UpdateStamina();
+        GetSpeed();
+        UpdateDash();
     }
     
     public RunState RS;
 
     public float GetSpeed()
     {
-        if (RS == RunState.DashReady) return 6 * SpeedMultiplier;
-        else if (RS == RunState.DashActive) return 12.5f * SpeedMultiplier;
-        else if (RS == RunState.DashRecover) return 3f;
-        return 3  * SpeedMultiplier;
+        if (RS == RunState.DashReady)
+        {
+            Debug.Log("dashready");
+            return 6 * SpeedMultiplier;
+        }
+        else if (RS == RunState.DashActive)
+        {
+            Debug.Log("dashactive");
+            return 18 * SpeedMultiplier;
+        }
+        else if (RS == RunState.DashRecover)
+        {
+            Debug.Log("dashrecover");
+            return 2 * SpeedMultiplier;
+        }
+        return 6  * SpeedMultiplier;
     }
     
     public enum RunState
@@ -124,22 +134,22 @@ public class PlayerScript : MonoBehaviour
         DashRecover,
     }
 
-    public void UpdateStamina()
+    public void UpdateDash()
     {
         if (RS == RunState.DashActive)
         {
-            Dash -= Time.deltaTime * (100/4f);
+            Dash -= Time.deltaTime * (100/.75f);
         }
         
         if (RS == RunState.DashReady)
         {
-            Dash += Time.deltaTime * (100/7f);
+            Dash += Time.deltaTime * (100/5f);
         }
 
         if (RS == RunState.DashRecover)
         {
             DashRecoverTimer -= Time.deltaTime;
-            Dash += Time.deltaTime * (100/5f);
+            Dash += Time.deltaTime * (100/10f);
             if (DashRecoverTimer <= 0)
             {
                 RS = RunState.DashReady;
@@ -155,7 +165,7 @@ public class PlayerScript : MonoBehaviour
         {
             Dash = 0;
             RS = RunState.DashRecover;
-            DashRecoverTimer = 5;
+            DashRecoverTimer = 10;
         }
     }
 
@@ -187,7 +197,6 @@ public class PlayerScript : MonoBehaviour
         // {
         //     playerCenter.Rotate(0,0,-300 * Time.deltaTime);
         // }
-
     }
 
     private void HandleShooting()

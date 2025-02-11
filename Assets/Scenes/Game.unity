@@ -2134,19 +2134,18 @@ MonoBehaviour:
   SR: {fileID: 1991113213}
   shootCooldown: 0.5
   nextShootTime: 0
-  playerCenter: {fileID: 2092076353}
+  playerCenter: {fileID: 422823926}
   turret: {fileID: 422823924}
   anim: {fileID: 2092076360}
   targetaim: {x: 0, y: 0}
   targetPos: {x: 0, y: 0}
   thisPos: {x: 0, y: 0}
   angle: 0
-  Dash: 0
+  Dash: 100
   MaxDash: 100
   DashTimer: 0
   DashRecoverTimer: 0
   PlayerDash: {fileID: 916049169}
-  SpeedMultiplier: 1
   RS: 0
 --- !u!50 &2092076357
 Rigidbody2D:

@@ -7,8 +7,7 @@ public class PlayerDashScript : MonoBehaviour
 {
     public SpriteRenderer DashBar;
     public PlayerScript Player;
-    //public float Stamina = 100;
-    //public float MaxStamina = 100;
+    
     void Start()
     {
         
@@ -29,13 +28,8 @@ public class PlayerDashScript : MonoBehaviour
         if (Player.RS == PlayerScript.RunState.DashReady)
         {
             DashBar.color = Color.green;
-
-            if (Player.Dash <= 100)
-            {
-                DashBar.color = Color.clear;
-            }
         }
         
-        DashBar.transform.localScale = new Vector3((Player.Dash / Player.MaxDash) * 1.82f, .325f, 1);
+        DashBar.transform.localScale = new Vector3((Player.Dash / Player.MaxDash) * 1, .1f, .1f);
     }
 }
