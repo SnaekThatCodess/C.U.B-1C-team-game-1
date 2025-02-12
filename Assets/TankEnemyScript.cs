@@ -92,7 +92,7 @@ public class TankEnemyScript : MonoBehaviour
 
     public void OnDestroy()
     {
-        pc.Score += 1;
+        pc.Score += 2;
         pc.UpdateScore();
     }
 

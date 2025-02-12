@@ -14,21 +14,21 @@ public class PlayerScript : MonoBehaviour
 
     public TextMeshPro ScoreText;
 
-    public TextMeshPro HealthInicator;
-    public SpriteRenderer HealthSprite;
     public TextMeshPro HealthText;
     
     public TextMeshPro HighscoreText;
 
     public TextMeshPro WaveText;
 
+    public SpriteRenderer Death;
+    public SpriteRenderer PlayerBase;
+    public SpriteRenderer PlayerTop;
+
     public float Speed = 5;
     public int Score = 0;
     public int Health = 10;
     public int Wave = 1;
     public static int Highscore = 0;
-
-    public SpriteRenderer SR;
 
     public float shootCooldown = 0.5f;
     public float nextShootTime = 0f;
@@ -54,7 +54,7 @@ public class PlayerScript : MonoBehaviour
         HighscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UpdateHealth();
         HandleMovement();
@@ -67,17 +67,17 @@ public class PlayerScript : MonoBehaviour
         thisPos = transform.position;
         targetPos.x = targetPos.x - thisPos.x;
         targetPos.y = targetPos.y - thisPos.y;
-        angle = Mathf.LerpAngle(angle,Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f,0.03f);
+        angle = Mathf.LerpAngle(angle,Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f,0.1f);
         turret.transform.rotation = Quaternion.Euler(0, 0, angle+90);
         
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (RS != RunState.DashRecover)
             {
                 RS = RunState.DashActive;
             }
         }
-        if (Input.GetKeyUp(KeyCode.RightShift))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             if (RS != RunState.DashRecover)
             {
@@ -87,7 +87,7 @@ public class PlayerScript : MonoBehaviour
             if (Dash == 0)
             {
                 RS = RunState.DashReady;
-                DashTimer = 10;
+                DashTimer = 5;
             }
         }
 
@@ -103,6 +103,11 @@ public class PlayerScript : MonoBehaviour
 
         GetSpeed();
         UpdateDash();
+
+        if (Health <= 0)
+        {
+            Die();
+        }
     }
     
     public RunState RS;
@@ -117,12 +122,12 @@ public class PlayerScript : MonoBehaviour
         else if (RS == RunState.DashActive)
         {
             Debug.Log("dashactive");
-            SpeedMultiplier = 2.5f;
+            SpeedMultiplier = 5f;
         }
         else if (RS == RunState.DashRecover)
         {
             Debug.Log("dashrecover");
-            SpeedMultiplier= 0.5f;
+            SpeedMultiplier= 0.9f;
         }
     }
     
@@ -137,18 +142,18 @@ public class PlayerScript : MonoBehaviour
     {
         if (RS == RunState.DashActive)
         {
-            Dash -= Time.deltaTime * (100/.25f);
+            Dash -= Time.deltaTime * (100/.15f);
         }
         
         if (RS == RunState.DashReady)
         {
-            Dash += Time.deltaTime * (100/5f);
+            Dash += Time.deltaTime * (100/6.5f);
         }
 
         if (RS == RunState.DashRecover)
         {
             DashRecoverTimer -= Time.deltaTime;
-            Dash += Time.deltaTime * (100/10f);
+            Dash += Time.deltaTime * (100/5f);
             if (DashRecoverTimer <= 0)
             {
                 RS = RunState.DashReady;
@@ -164,7 +169,7 @@ public class PlayerScript : MonoBehaviour
         {
             Dash = 0;
             RS = RunState.DashRecover;
-            DashRecoverTimer = 10;
+            DashRecoverTimer = 5;
         }
     }
 
@@ -188,7 +193,7 @@ public class PlayerScript : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextShootTime)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextShootTime)
         {
             Shoot();
             nextShootTime = Time.time + shootCooldown;
@@ -262,10 +267,12 @@ public class PlayerScript : MonoBehaviour
 
     public void Die()
     {
-        if (Health < 1)
+        if (Health <= 1)
         {
             Speed = 0;
-            SR.color = Color.white;
+            Death.color = Color.white;
+            PlayerBase.color = Color.clear;
+            PlayerTop.color = Color.clear;
             Audio.PlayOneShot(PlayerDeath);
             Invoke("LoadLoseScene", 1f);
         }

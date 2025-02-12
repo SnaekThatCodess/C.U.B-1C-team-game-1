@@ -53,7 +53,7 @@ public class StalkerEnemyScript : MonoBehaviour
 
     public void OnDestroy()
     {
-        pc.Score += 1;
+        pc.Score += 3;
         pc.UpdateScore();
     }
 }
