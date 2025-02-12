@@ -107,24 +107,23 @@ public class PlayerScript : MonoBehaviour
     
     public RunState RS;
 
-    public float GetSpeed()
+    public void GetSpeed()
     {
         if (RS == RunState.DashReady)
         {
             Debug.Log("dashready");
-            return 6 * SpeedMultiplier;
+            SpeedMultiplier = 1;
         }
         else if (RS == RunState.DashActive)
         {
             Debug.Log("dashactive");
-            return 18 * SpeedMultiplier;
+            SpeedMultiplier=1.8f;
         }
         else if (RS == RunState.DashRecover)
         {
             Debug.Log("dashrecover");
-            return 2 * SpeedMultiplier;
+            SpeedMultiplier=0.4f;
         }
-        return 6  * SpeedMultiplier;
     }
     
     public enum RunState
@@ -173,10 +172,10 @@ public class PlayerScript : MonoBehaviour
     {
         Vector2 vel = new Vector2(0, 0);
 
-        if (Input.GetKey(KeyCode.D)) vel.x = Speed;
-        if (Input.GetKey(KeyCode.A)) vel.x = -Speed;
-        if (Input.GetKey(KeyCode.W)) vel.y = Speed;
-        if (Input.GetKey(KeyCode.S)) vel.y = -Speed;
+        if (Input.GetKey(KeyCode.D)) vel.x = Speed*SpeedMultiplier;
+        if (Input.GetKey(KeyCode.A)) vel.x = -Speed*SpeedMultiplier;
+        if (Input.GetKey(KeyCode.W)) vel.y = Speed*SpeedMultiplier;
+        if (Input.GetKey(KeyCode.S)) vel.y = -Speed*SpeedMultiplier;
 
         RB.velocity = vel;
         anim.Play("playerdrive");

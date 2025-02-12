@@ -2146,6 +2146,7 @@ MonoBehaviour:
   DashTimer: 0
   DashRecoverTimer: 0
   PlayerDash: {fileID: 916049169}
+  SpeedMultiplier: 1
   RS: 0
 --- !u!50 &2092076357
 Rigidbody2D:
