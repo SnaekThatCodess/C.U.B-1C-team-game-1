@@ -117,12 +117,12 @@ public class PlayerScript : MonoBehaviour
         else if (RS == RunState.DashActive)
         {
             Debug.Log("dashactive");
-            SpeedMultiplier=1.8f;
+            SpeedMultiplier = 2.5f;
         }
         else if (RS == RunState.DashRecover)
         {
             Debug.Log("dashrecover");
-            SpeedMultiplier=0.4f;
+            SpeedMultiplier= 0.5f;
         }
     }
     
@@ -137,7 +137,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (RS == RunState.DashActive)
         {
-            Dash -= Time.deltaTime * (100/.75f);
+            Dash -= Time.deltaTime * (100/.25f);
         }
         
         if (RS == RunState.DashReady)
@@ -183,19 +183,7 @@ public class PlayerScript : MonoBehaviour
 
     private void UpdateRotation()
     {
-        //**lets change it so that the player turns in the way its moving**
-        
-        // playerCenter.Rotate(0,0,0);
-        //
-        // if (Input.GetKey(KeyCode.LeftArrow))
-        // {
-        //     playerCenter.Rotate(0, 0, 300 * Time.deltaTime);
-        // }
-        //
-        // if (Input.GetKey(KeyCode.RightArrow))
-        // {
-        //     playerCenter.Rotate(0,0,-300 * Time.deltaTime);
-        // }
+        //**lets change it so that the player turns in the way its moving (directional via WASD)**
     }
 
     private void HandleShooting()

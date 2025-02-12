@@ -119,6 +119,5 @@ public class TankEnemyScript : MonoBehaviour
 
             Destroy(bullet, bulletScript.Lifetime);
         }
-    
     }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDashScript : MonoBehaviour
@@ -8,10 +5,6 @@ public class PlayerDashScript : MonoBehaviour
     public SpriteRenderer DashBar;
     public PlayerScript Player;
     
-    void Start()
-    {
-        
-    }
 
     void FixedUpdate()
     {
