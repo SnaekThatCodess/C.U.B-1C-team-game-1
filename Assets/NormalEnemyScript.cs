@@ -27,7 +27,7 @@ public class NormalEnemyScript : MonoBehaviour
         player = GameObject.Find("player");
         pc = player.GetComponent<PlayerScript>();
 
-        randomShootInterval = Random.Range(2f, 5f);
+        randomShootInterval = Random.Range(2f, 7f);
         nextShootTime = Time.time + randomShootInterval;
         anim.Play("normaldrive");
     }

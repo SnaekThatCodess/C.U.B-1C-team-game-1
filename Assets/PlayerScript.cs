@@ -273,13 +273,13 @@ public class PlayerScript : MonoBehaviour
             Death.color = Color.white;
             PlayerBase.color = Color.clear;
             PlayerTop.color = Color.clear;
-            Audio.PlayOneShot(PlayerDeath);
+            //Audio.PlayOneShot(PlayerDeath);
             Invoke("LoadLoseScene", 1f);
         }
         else
         {
             Health--;
-            Audio.PlayOneShot(ouch);
+            //Audio.PlayOneShot(ouch);
         }
     }
 

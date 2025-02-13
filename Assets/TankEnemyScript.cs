@@ -29,14 +29,14 @@ public class TankEnemyScript : MonoBehaviour
     private float randomShootInterval;
 
     [Header("Bullet Spread Angles")]
-    public float[] spreadAngles = {-25f, 25f, -57.5f, 57.5f};
+    public float[] spreadAngles = {-10f, 10f, -30f, 30f};
 
     void Start()
     {
         player = GameObject.Find("player");
         pc = player.GetComponent<PlayerScript>();
         
-        randomShootInterval = Random.Range(2f, 5f);
+        randomShootInterval = Random.Range(3f, 10f);
         nextShootTime = Time.time + randomShootInterval;
     }
 

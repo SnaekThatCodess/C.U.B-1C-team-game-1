@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         UpdateTimerUI();
 
         transform.position = Vector3.Lerp(transform.position,
-            new Vector3(Player.transform.position.x, Player.transform.position.y, -10), .05f);
+            new Vector3(Player.transform.position.x, Player.transform.position.y, -10), .08f);
     }
 
     void UpdateGameSettings(float bulletSpeed, float shootCooldown, float minSpawnRate,
