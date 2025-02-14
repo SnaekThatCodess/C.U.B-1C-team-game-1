@@ -54,7 +54,7 @@ public class PlayerScript : MonoBehaviour
         HighscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore", 0);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         UpdateHealth();
         HandleMovement();

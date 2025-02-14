@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  NormalHealth: 5
+  NormalHealth: 3
   player: {fileID: 0}
   turret: {fileID: 289324909530005401}
   anim: {fileID: 7287067753291955089}

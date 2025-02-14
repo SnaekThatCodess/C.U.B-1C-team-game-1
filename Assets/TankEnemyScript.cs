@@ -23,7 +23,7 @@ public class TankEnemyScript : MonoBehaviour
     
     public Transform tankCenter;
     
-    public float normalBulletTimer = 5f;
+    public float tankBulletTimer = 5f;
     private float currentTime;
     
     private float randomShootInterval;
@@ -43,7 +43,7 @@ public class TankEnemyScript : MonoBehaviour
     void Update()
     {
         
-        normalBulletTimer -= Time.deltaTime;
+        tankBulletTimer -= Time.deltaTime;
         
         target = player.transform;
         Vector3 direction = (target.position - transform.position).normalized;
@@ -54,7 +54,7 @@ public class TankEnemyScript : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (normalBulletTimer <= 1)
+        if (tankBulletTimer <= 1)
         {
             HandleShooting();
         }
@@ -72,7 +72,7 @@ public class TankEnemyScript : MonoBehaviour
         targetPos.x = targetPos.x - thisPos.x;
         targetPos.y = targetPos.y - thisPos.y;
         angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f;
-        transform.rotation = Quaternion.Euler(0, 0, angle-90);
+        transform.rotation = Quaternion.Euler(0, 0, angle+90);
     }
 
     private void HandleShooting()

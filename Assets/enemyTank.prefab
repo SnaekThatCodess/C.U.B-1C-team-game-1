@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  TankHealth: 10
+  TankHealth: 5
   player: {fileID: 0}
   turret: {fileID: 1536824659366068859}
   anim: {fileID: 5224279273461445062}
@@ -368,12 +368,12 @@ MonoBehaviour:
   shootCooldown: 3
   nextShootTime: 1
   tankCenter: {fileID: 6339612745439590567}
-  normalBulletTimer: 5
+  tankBulletTimer: 5
   spreadAngles:
-  - -25
-  - 25
-  - -57.5
-  - 57.5
+  - -40
+  - -15
+  - 15
+  - 40
 --- !u!95 &5224279273461445062
 Animator:
   serializedVersion: 5

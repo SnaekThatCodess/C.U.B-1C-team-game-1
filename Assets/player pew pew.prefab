@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
-  Lifetime: 999
+  Lifetime: 5
 --- !u!95 &1839579141038946549
 Animator:
   serializedVersion: 5

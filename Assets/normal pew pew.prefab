@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 7
-  Lifetime: 5
+  Lifetime: 4
   RB: {fileID: 5447185681337665430}
 --- !u!95 &3973011345533189525
 Animator:
