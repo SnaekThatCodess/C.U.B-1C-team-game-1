@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbd8bdb795a94a8e9ab3ac4a0fb1f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 6.5
   NormalHealth: 3
   player: {fileID: 0}
   turret: {fileID: 289324909530005401}
@@ -270,6 +270,7 @@ MonoBehaviour:
   pc: {fileID: 0}
   NormalBulletPrefab: {fileID: 3941914166409597600, guid: ca213c905ff2dce41bcfea65176e34f4, type: 3}
   normalCenter: {fileID: 5046421552318137668}
+  GM: {fileID: 0}
 --- !u!82 &4191263020635280318
 AudioSource:
   m_ObjectHideFlags: 0

@@ -364,6 +364,7 @@ MonoBehaviour:
   thisPos: {x: 0, y: 0}
   angle: 0
   pc: {fileID: 0}
+  GM: {fileID: 0}
 --- !u!95 &3566708995688357998
 Animator:
   serializedVersion: 5

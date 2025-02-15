@@ -30,6 +30,8 @@ public class TankEnemyScript : MonoBehaviour
 
     [Header("Bullet Spread Angles")]
     public float[] spreadAngles = {-10f, 10f, -30f, 30f};
+    
+    public GameManager GM;
 
     void Start()
     {

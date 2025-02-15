@@ -22,6 +22,8 @@ public class NormalEnemyScript : MonoBehaviour
     private float nextShootTime;
     private float randomShootInterval;
 
+    public GameManager GM;
+
     public void Start()
     {
         player = GameObject.Find("player");

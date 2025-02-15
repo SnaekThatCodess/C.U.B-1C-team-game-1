@@ -14,6 +14,8 @@ public class StalkerEnemyScript : MonoBehaviour
     public float angle;
 
     public PlayerScript pc;
+    
+    public GameManager GM;
 
     public void Start()
     {

@@ -21,19 +21,18 @@ public class GameManager : MonoBehaviour
     public TextMeshPro WaveText;
     public TextMeshPro EnemiesLeft;
 
-    private int currentWave = 1;
-    private int totalEnemiesKilled = 0;
-    private int enemiesInCurrentWave = 10;
+    public int totalEnemiesKilled = 0;
+    public int enemiesInCurrentWave = 10;
 
     public Camera mainCamera;
     public Transform PlayerTransform;
 
     void Start()
     {
+        //OnEnemyKilled();
         currentTime = countdownTime;
         UpdateTimerUI();
         timerText.color = Color.white;
-        UpdateWaveUI();
         
         if (mainCamera == null)
         {
@@ -51,10 +50,8 @@ public class GameManager : MonoBehaviour
             Vector3 targetPosition = new Vector3
                 (Player.transform.position.x, Player.transform.position.y, mainCamera.transform.position.z);
             mainCamera.transform.position = Vector3.Lerp
-                (mainCamera.transform.position, targetPosition, 0.08f);
+                (mainCamera.transform.position, targetPosition, 0.075f);
         }
-
-        // Removed the call to OnEnemyKilled() from FixedUpdate() (as mentioned earlier)
     }
 
     void UpdateGameSettings(float playerbulletSpeed, float normalbulletSpeed, float tankbulletSpeed,
@@ -128,96 +125,5 @@ public class GameManager : MonoBehaviour
     void UpdateTimerUI()
     {
         timerText.text = $"{Mathf.Max(0, Mathf.FloorToInt(currentTime))}";
-    }
-
-    public void OnEnemyKilled()
-    {
-        totalEnemiesKilled++;
-
-        if (totalEnemiesKilled >= enemiesInCurrentWave)
-        {
-            StartWave();
-        }
-    }
-
-    void StartWave()
-    {
-        if (totalEnemiesKilled < enemiesInCurrentWave)
-            return;
-
-        currentWave++;
-        totalEnemiesKilled = 0;
-        enemiesInCurrentWave = 10 + currentWave * 2;
-
-        DespawnAllEnemies();
-        
-        DespawnAllBullets();
-
-        float newPlayerBulletSpeed = 5f * currentWave;
-        float newNormalBulletSpeed = 6f * currentWave;
-        float newTankBulletSpeed = 4.5f * currentWave;
-        float newShootCooldown = 1f / currentWave;
-        float newMinSpawnRate = 1f / currentWave;
-        float newMaxSpawnRate = 1f / (currentWave * 0.5f);
-        float newRotationSpeed = 10f * currentWave;
-        float newNormalEnemySpeed = 2f * currentWave;
-        float newTankEnemySpeed = 1.5f * currentWave;
-        float newStalkerEnemySpeed = 2.5f * currentWave;
-
-        UpdateGameSettings(newPlayerBulletSpeed, newNormalBulletSpeed, 
-            newTankBulletSpeed, newShootCooldown, newMinSpawnRate, newMaxSpawnRate, newRotationSpeed,
-            newNormalEnemySpeed, newTankEnemySpeed, newStalkerEnemySpeed);
-
-        Player.Health += 1;
-
-        Player.Speed *= 0.99f;
-        Player.shootCooldown *= 1.01f;
-        Player.Dash *= 0.99f;
-
-        UpdateWaveUI();
-
-        Debug.Log("Wave " + currentWave + " started!");
-    }
-
-    void UpdateWaveUI()
-    {
-        WaveText.text = "Wave: " + currentWave;
-        EnemiesLeft.text = "Enemies Left: " + (enemiesInCurrentWave - totalEnemiesKilled);
-    }
-
-    void DespawnAllEnemies()
-    {
-        foreach (var normalenemy in NormalEnemies)
-        {
-            Destroy(normalenemy.gameObject);
-        }
-
-        foreach (var tankenemy in TankEnemies)
-        {
-            Destroy(tankenemy.gameObject);
-        }
-
-        foreach (var stalkerenemy in StalkerEnemies)
-        {
-            Destroy(stalkerenemy.gameObject);
-        }
-    }
-    
-    void DespawnAllBullets()
-    {
-        foreach (var normalbullet in normalBullets)
-        {
-            Destroy(normalbullet.gameObject);
-        }
-
-        foreach (var tankbullet in tankBullets)
-        {
-            Destroy(tankbullet.gameObject);
-        }
-
-        foreach (var playerbullet in playerBullets)
-        {
-            Destroy(playerbullet.gameObject);
-        }
     }
 }
