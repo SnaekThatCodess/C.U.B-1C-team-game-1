@@ -27,7 +27,6 @@ public class PlayerScript : MonoBehaviour
     public float Speed = 5;
     public int Score = 0;
     public int Health = 10;
-    public int Wave = 1;
     public static int Highscore = 0;
 
     public float shootCooldown = 0.5f;
@@ -116,17 +115,14 @@ public class PlayerScript : MonoBehaviour
     {
         if (RS == RunState.DashReady)
         {
-            Debug.Log("dashready");
             SpeedMultiplier = 1;
         }
         else if (RS == RunState.DashActive)
         {
-            Debug.Log("dashactive");
             SpeedMultiplier = 5f;
         }
         else if (RS == RunState.DashRecover)
         {
-            Debug.Log("dashrecover");
             SpeedMultiplier= 0.9f;
         }
     }
@@ -211,13 +207,13 @@ public class PlayerScript : MonoBehaviour
         
             GameObject bullet = Instantiate(BulletPrefab, spawnPosition, bulletRotation);
 
-            BulletScript bulletScript = bullet.GetComponent<BulletScript>();
+            BulletPlayerScript bulletScript = bullet.GetComponent<BulletPlayerScript>();
             bulletScript.Initialize(this);
 
             Vector3 direction = bullet.transform.up; 
             bulletScript.SetDirection(direction);
         
-            Audio.PlayOneShot(fire);
+            //Audio.PlayOneShot(fire);
         }
     }
 

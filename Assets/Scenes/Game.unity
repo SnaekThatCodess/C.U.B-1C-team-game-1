@@ -1271,13 +1271,21 @@ MonoBehaviour:
   - {fileID: 624108080}
   - {fileID: 969613938}
   NormalEnemies:
-  - {fileID: 0}
+  - {fileID: 5488582099607798508, guid: 53cb31c298fe5da4a8f69dc2619f8446, type: 3}
   TankEnemies:
-  - {fileID: 0}
+  - {fileID: 15411883166316139, guid: ae94be1a1f1ae2845bc838107174126b, type: 3}
   StalkerEnemies:
-  - {fileID: 0}
-  bullets:
-  - {fileID: 0}
+  - {fileID: 8318392089789294082, guid: 418ff7682deb4924cb9b7e729396122f, type: 3}
+  playerBullets:
+  - {fileID: 6199707407160331257, guid: a848162d9bc83ed4f88e3e6638083eed, type: 3}
+  normalBullets:
+  - {fileID: 7228364913554661884, guid: ca213c905ff2dce41bcfea65176e34f4, type: 3}
+  tankBullets:
+  - {fileID: 5151618658930093126, guid: c3f7162c07cec834997553f97094b2e1, type: 3}
+  WaveText: {fileID: 1491258754}
+  EnemiesLeft: {fileID: 1785298421}
+  mainCamera: {fileID: 519420031}
+  PlayerTransform: {fileID: 2092076353}
 --- !u!1 &539243195
 GameObject:
   m_ObjectHideFlags: 0
@@ -3545,7 +3553,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enemies Remaining: ???'
+  m_text: 'Enemies Remaining: 10'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4406,7 +4414,6 @@ MonoBehaviour:
   Speed: 6
   Score: 0
   Health: 20
-  Wave: 1
   shootCooldown: 0.5
   nextShootTime: 0
   playerCenter: {fileID: 422823926}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletPlayerScript : MonoBehaviour
 {
     public float Speed = 10f;
     public float Lifetime = 2f;
