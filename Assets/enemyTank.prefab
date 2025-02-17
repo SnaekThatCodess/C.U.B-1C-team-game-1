@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331e9987fc286468bbeceb5e567b3b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4.68
   TankHealth: 5
   player: {fileID: 0}
   turret: {fileID: 1536824659366068859}

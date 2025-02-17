@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0fb957fd8774d7491bcc21bf752eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 9.36
   StalkerHealth: 2
   player: {fileID: 0}
   turret: {fileID: 5972914181284148102}
