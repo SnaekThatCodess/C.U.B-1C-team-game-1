@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public float RotationSpeed = 20f;
     public float SpawnAreaSize = 1f;
     public Transform pivot;
+    public GameManager gameManager;
 
     private void Start()
     {
@@ -29,8 +30,20 @@ public class EnemySpawner : MonoBehaviour
         float offsetX = Random.Range(-SpawnAreaSize, SpawnAreaSize);
         float offsetY = Random.Range(-SpawnAreaSize, SpawnAreaSize);
         Vector3 spawnPosition = transform.position + new Vector3(offsetX, offsetY, 0);
-        Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
-        StartCoroutine(SpawnEnemies());
+        GameObject enemyObject = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+
+        if (enemyObject.GetComponent<NormalEnemyScript>())
+        {
+            gameManager.NormalEnemies.Add(enemyObject.GetComponent<NormalEnemyScript>());
+        }
+        else if (enemyObject.GetComponent<TankEnemyScript>())
+        {
+            gameManager.TankEnemies.Add(enemyObject.GetComponent<TankEnemyScript>());
+        }
+        else if (enemyObject.GetComponent<StalkerEnemyScript>())
+        {
+            gameManager.StalkerEnemies.Add(enemyObject.GetComponent<StalkerEnemyScript>());
+        }
     }
 
     private void Update()

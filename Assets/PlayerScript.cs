@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
     public TextMeshPro ScoreText;
 
     public TextMeshPro HealthText;
-    
+
     public TextMeshPro HighscoreText;
 
     public TextMeshPro WaveText;
@@ -31,7 +31,10 @@ public class PlayerScript : MonoBehaviour
 
     public float shootCooldown = 0.5f;
     public float nextShootTime = 0f;
-    
+
+    public GameManager GM;
+    public BulletPlayerScript playerBullet;
+
     public Transform playerCenter;
     public GameObject turret;
     public Animator anim;
@@ -39,7 +42,7 @@ public class PlayerScript : MonoBehaviour
     public Vector2 targetPos;
     public Vector2 thisPos;
     public float angle;
-    
+
     public float Dash;
     public float MaxDash = 100;
     public float DashTimer;
@@ -60,15 +63,15 @@ public class PlayerScript : MonoBehaviour
         HandleShooting();
         UpdateHighscore();
         UpdateRotation();
-        
+
         targetaim = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         targetPos = targetaim;
         thisPos = transform.position;
         targetPos.x = targetPos.x - thisPos.x;
         targetPos.y = targetPos.y - thisPos.y;
-        angle = Mathf.LerpAngle(angle,Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f,0.1f);
-        turret.transform.rotation = Quaternion.Euler(0, 0, angle+90);
-        
+        angle = Mathf.LerpAngle(angle, Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg + 180f, 0.1f);
+        turret.transform.rotation = Quaternion.Euler(0, 0, angle + 90);
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (RS != RunState.DashRecover)
@@ -82,7 +85,7 @@ public class PlayerScript : MonoBehaviour
             {
                 RS = RunState.DashReady;
             }
-    
+
             if (Dash == 0)
             {
                 RS = RunState.DashReady;
@@ -94,7 +97,7 @@ public class PlayerScript : MonoBehaviour
         {
             SpeedMultiplier = 1;
         }
-        
+
         if (SpeedMultiplier < 0)
         {
             SpeedMultiplier = 0;
@@ -108,7 +111,7 @@ public class PlayerScript : MonoBehaviour
             Die();
         }
     }
-    
+
     public RunState RS;
 
     public void GetSpeed()
@@ -123,10 +126,10 @@ public class PlayerScript : MonoBehaviour
         }
         else if (RS == RunState.DashRecover)
         {
-            SpeedMultiplier= 0.9f;
+            SpeedMultiplier = 0.9f;
         }
     }
-    
+
     public enum RunState
     {
         DashReady,
@@ -138,18 +141,18 @@ public class PlayerScript : MonoBehaviour
     {
         if (RS == RunState.DashActive)
         {
-            Dash -= Time.deltaTime * (100/.15f);
+            Dash -= Time.deltaTime * (100 / .15f);
         }
-        
+
         if (RS == RunState.DashReady)
         {
-            Dash += Time.deltaTime * (100/6.5f);
+            Dash += Time.deltaTime * (100 / 6.5f);
         }
 
         if (RS == RunState.DashRecover)
         {
             DashRecoverTimer -= Time.deltaTime;
-            Dash += Time.deltaTime * (100/5f);
+            Dash += Time.deltaTime * (100 / 5f);
             if (DashRecoverTimer <= 0)
             {
                 RS = RunState.DashReady;
@@ -173,10 +176,10 @@ public class PlayerScript : MonoBehaviour
     {
         Vector2 vel = new Vector2(0, 0);
 
-        if (Input.GetKey(KeyCode.D)) vel.x = Speed*SpeedMultiplier;
-        if (Input.GetKey(KeyCode.A)) vel.x = -Speed*SpeedMultiplier;
-        if (Input.GetKey(KeyCode.W)) vel.y = Speed*SpeedMultiplier;
-        if (Input.GetKey(KeyCode.S)) vel.y = -Speed*SpeedMultiplier;
+        if (Input.GetKey(KeyCode.D)) vel.x = Speed * SpeedMultiplier;
+        if (Input.GetKey(KeyCode.A)) vel.x = -Speed * SpeedMultiplier;
+        if (Input.GetKey(KeyCode.W)) vel.y = Speed * SpeedMultiplier;
+        if (Input.GetKey(KeyCode.S)) vel.y = -Speed * SpeedMultiplier;
 
         RB.velocity = vel;
         anim.Play("playerdrive");
@@ -184,7 +187,16 @@ public class PlayerScript : MonoBehaviour
 
     private void UpdateRotation()
     {
-        //**lets change it so that the player turns in the way its moving (directional via WASD)**
+        Vector2 velocity = RB.velocity;
+    
+        if (velocity.sqrMagnitude > 0)
+        {
+            float targetAngle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+
+            float smoothAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, Time.deltaTime * 10f);
+
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, smoothAngle));
+        }
     }
 
     private void HandleShooting()
@@ -204,16 +216,26 @@ public class PlayerScript : MonoBehaviour
             Quaternion bulletRotation = playerCenter.rotation;
 
             Vector3 spawnPosition = transform.position + bulletRotation * new Vector3(0, 2f, 0);
-        
+
             GameObject bullet = Instantiate(BulletPrefab, spawnPosition, bulletRotation);
 
             BulletPlayerScript bulletScript = bullet.GetComponent<BulletPlayerScript>();
             bulletScript.Initialize(this);
 
-            Vector3 direction = bullet.transform.up; 
+            Vector3 direction = bullet.transform.up;
             bulletScript.SetDirection(direction);
-        
+
+            if (GM != null)
+            {
+                GM.playerBullets.Add(bulletScript);
+            }
+
             //Audio.PlayOneShot(fire);
+        }
+        
+        if (GM != null)
+        {
+            GM.playerBullets.Add(playerBullet);
         }
     }
 
@@ -225,14 +247,14 @@ public class PlayerScript : MonoBehaviour
             normalenemy.GetBumped();
             Die();
         }
-        
+
         TankEnemyScript tankenemy = other.gameObject.GetComponent<TankEnemyScript>();
         if (tankenemy != null)
         {
             tankenemy.GetBumped();
             Die();
         }
-        
+
         StalkerEnemyScript stalkerenemy = other.gameObject.GetComponent<StalkerEnemyScript>();
         if (stalkerenemy != null)
         {

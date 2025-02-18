@@ -1,11 +1,11 @@
-using System.Collections;
-using TMPro;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using Color = UnityEngine.Color;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public TextMeshPro timerText;
     public float countdownTime = 0f;
     private float currentTime;
@@ -28,9 +28,17 @@ public class GameManager : MonoBehaviour
     public Camera mainCamera;
     public Transform PlayerTransform;
 
-    public GameObject normalEnemyPrefab;
-    public GameObject tankEnemyPrefab;
-    public GameObject stalkerEnemyPrefab;
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
@@ -45,6 +53,11 @@ public class GameManager : MonoBehaviour
             mainCamera = Camera.main;
         }
 
+        foreach (var spawner in spawners)
+        {
+            spawner.gameManager = this;
+        }
+
         UpdateGameSettings
         (
             6.5f,
@@ -57,8 +70,6 @@ public class GameManager : MonoBehaviour
             5.5f,
             4f,
             9f
-            
-            // * difficultyMultiplier
         );
     }
 
@@ -80,6 +91,17 @@ public class GameManager : MonoBehaviour
 
         UpdateWave();
     }
+    
+    public void AddBullet(BulletPlayerScript bullet)
+    {
+        playerBullets.Add(bullet);
+    }
+
+    public void RemoveBullet(BulletPlayerScript bullet)
+    {
+        playerBullets.Remove(bullet);
+    }
+
 
     void UpdateGameSettings(
         float playerbulletSpeed,
@@ -167,93 +189,72 @@ public class GameManager : MonoBehaviour
         WaveTimeLeft.text = $"Time Left: {Mathf.Max(0, Mathf.FloorToInt(timeUntilNextWave))}";
     }
 
-    IEnumerator ReverseAndMagnifySpeedForSeconds(GameObject obj, float duration, float speedMultiplier)
-    {
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-
-        if (rb != null)
-        {
-            Vector3 originalVelocity = rb.velocity;
-
-            rb.velocity = -originalVelocity * speedMultiplier;
-
-            yield return new WaitForSeconds(duration);
-
-            rb.velocity = originalVelocity;
-        }
-        else
-        {
-            Vector3 originalPosition = obj.transform.position;
-            Vector3 directionToPlayer = (obj.transform.position - Player.transform.position).normalized;
-
-            obj.transform.position += directionToPlayer * speedMultiplier;
-
-            yield return new WaitForSeconds(duration);
-
-            obj.transform.position = originalPosition;
-        }
-    }
-
-    void SendObjectsFarAwayFromPlayer()
+    void DestroyAllEnemiesAndBullets()
     {
         foreach (var enemy in NormalEnemies)
         {
             if (enemy != null)
             {
-                StartCoroutine(ReverseAndMagnifySpeedForSeconds(enemy.gameObject, 15f, 10f));
+                Destroy(enemy.gameObject);
             }
         }
+        NormalEnemies.Clear();
 
         foreach (var tankEnemy in TankEnemies)
         {
             if (tankEnemy != null)
             {
-                StartCoroutine(ReverseAndMagnifySpeedForSeconds(tankEnemy.gameObject, 15f, 10f));
+                Destroy(tankEnemy.gameObject);
             }
         }
+        TankEnemies.Clear();
 
         foreach (var stalkerEnemy in StalkerEnemies)
         {
             if (stalkerEnemy != null)
             {
-                StartCoroutine(ReverseAndMagnifySpeedForSeconds(stalkerEnemy.gameObject, 15f, 10f));
+                Destroy(stalkerEnemy.gameObject);
             }
         }
+        StalkerEnemies.Clear();
 
         foreach (var playerBullet in playerBullets)
         {
             if (playerBullet != null)
             {
-                StartCoroutine(ReverseAndMagnifySpeedForSeconds(playerBullet.gameObject, 15f, 10f));
+                Destroy(playerBullet.gameObject);
             }
         }
+        playerBullets.Clear();
 
         foreach (var normalBullet in normalBullets)
         {
             if (normalBullet != null)
             {
-                StartCoroutine(ReverseAndMagnifySpeedForSeconds(normalBullet.gameObject, 15f, 10f));
+                Destroy(normalBullet.gameObject);
             }
         }
+        normalBullets.Clear();
 
         foreach (var tankBullet in tankBullets)
         {
             if (tankBullet != null)
             {
-                StartCoroutine(ReverseAndMagnifySpeedForSeconds(tankBullet.gameObject, 15f, 10f));
+                Destroy(tankBullet.gameObject);
             }
         }
+        tankBullets.Clear();
     }
 
     void UpdateWave()
     {
         if (Player.Health >= 1 && timeUntilNextWave <= 0)
         {
+            DestroyAllEnemiesAndBullets();
+
             currentWave++;
             Player.Health++;
 
-            SendObjectsFarAwayFromPlayer();
-        
             WaveText.text = "Wave " + currentWave;
 
             if (currentWave >= 5)
@@ -292,34 +293,6 @@ public class GameManager : MonoBehaviour
             timeUntilNextWave = 30f * Mathf.Pow(1.02f, currentWave);
 
             WaveText.text = "Wave " + currentWave;
-        }
-    }
-
-    void SpawnEnemiesForWave()
-    {
-        int numberOfNormalEnemies = Mathf.FloorToInt(currentWave * 1.5f);
-        int numberOfTankEnemies = Mathf.FloorToInt(currentWave * 0.75f);
-        int numberOfStalkerEnemies = Mathf.FloorToInt(currentWave * 0.5f); 
-        
-        int spawnerCount = spawners.Count;
-
-        if (spawnerCount == 0) return;
-
-        for (int i = 0; i < spawnerCount; i++)
-        {
-            var spawner = spawners[i];
-
-            int spawnerNormalEnemies = Mathf.FloorToInt(numberOfNormalEnemies / (float)spawnerCount);
-            int spawnerTankEnemies = Mathf.FloorToInt(numberOfTankEnemies / (float)spawnerCount);
-            int spawnerStalkerEnemies = Mathf.FloorToInt(numberOfStalkerEnemies / (float)spawnerCount);
-
-            spawner.EnemyPrefabs = new GameObject[] { normalEnemyPrefab, tankEnemyPrefab, stalkerEnemyPrefab };
-            spawner.MinSpawnRate =
-                Mathf.Clamp(spawner.MinSpawnRate * (1 + currentWave * 0.02f), 1f,
-                    10f);
-            spawner.MaxSpawnRate =
-                Mathf.Clamp(spawner.MaxSpawnRate * (1 + currentWave * 0.02f), 1f,
-                    10f);
         }
     }
 }

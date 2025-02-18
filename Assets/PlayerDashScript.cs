@@ -4,9 +4,14 @@ public class PlayerDashScript : MonoBehaviour
 {
     public SpriteRenderer DashBar;
     public PlayerScript Player;
-    
+    public Vector3 DashBarOffset = new Vector3(0, -0.4f, -1f);
 
-    void FixedUpdate()
+    private void Start()
+    {
+        DashBar.transform.SetParent(null);
+    }
+
+    private void FixedUpdate()
     {
         if (Player.RS == PlayerScript.RunState.DashActive)
         {
@@ -22,7 +27,11 @@ public class PlayerDashScript : MonoBehaviour
         {
             DashBar.color = Color.green;
         }
-        
-        DashBar.transform.localScale = new Vector3((Player.Dash / Player.MaxDash) * 1, .1f, .1f);
+
+        DashBar.transform.position = Player.transform.position + DashBarOffset;
+
+        DashBar.transform.localScale = new Vector3((Player.Dash / Player.MaxDash) * 6, .65f, .1f);
+
+        DashBar.transform.rotation = Quaternion.identity;
     }
 }
