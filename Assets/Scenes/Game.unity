@@ -3508,8 +3508,11 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!61 &226734004
 =======
+=======
+>>>>>>> Stashed changes
 --- !u!1 &237115891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3529,6 +3532,9 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!61 &237115892
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3536,7 +3542,11 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 226734001}
+=======
+  m_GameObject: {fileID: 237115891}
+>>>>>>> Stashed changes
 =======
   m_GameObject: {fileID: 237115891}
 >>>>>>> Stashed changes
@@ -3570,8 +3580,13 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.64, y: 0.64}
+=======
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+>>>>>>> Stashed changes
 =======
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
@@ -3582,9 +3597,12 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
 =======
+=======
+>>>>>>> Stashed changes
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &237115893
@@ -3654,6 +3672,9 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 --- !u!1 &244329229
 GameObject:
@@ -19146,8 +19167,11 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!61 &1178437789
 =======
+=======
+>>>>>>> Stashed changes
 --- !u!1 &1180200727
 GameObject:
   m_ObjectHideFlags: 0
@@ -19167,6 +19191,9 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!61 &1180200728
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19174,7 +19201,11 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 1178437786}
+=======
+  m_GameObject: {fileID: 1180200727}
+>>>>>>> Stashed changes
 =======
   m_GameObject: {fileID: 1180200727}
 >>>>>>> Stashed changes
@@ -19208,8 +19239,13 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.64, y: 0.64}
+=======
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+>>>>>>> Stashed changes
 =======
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
@@ -19220,9 +19256,12 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
 =======
+=======
+>>>>>>> Stashed changes
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1180200729
@@ -19292,6 +19331,9 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 --- !u!1 &1190323781
 GameObject:
