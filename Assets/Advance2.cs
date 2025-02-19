@@ -1,14 +1,13 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Advance1 : MonoBehaviour
+public class Advance2 : MonoBehaviour
 {
     void Update()
     {
         if (Input.GetKey(KeyCode.Return))
         {
-            SceneManager.LoadScene("Tutorial2");
+            SceneManager.LoadScene("Tutorial3");
         }
     }
 }

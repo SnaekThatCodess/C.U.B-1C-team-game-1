@@ -3,9 +3,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager3 : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static GameManager3 Instance { get; private set; }
 
     public TextMeshPro timerText;
     public float countdownTime = 0f;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public TextMeshPro WaveText;
     public TextMeshPro WaveTimeLeft;
     private float timeUntilNextWave;
-    public float currentWave = 1;
+    public float currentWave = 2;
     public float waveTimer = 30;
 
     public Camera mainCamera;
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        currentWave = 2;
         currentTime = countdownTime;
         timeUntilNextWave = waveTimer;
         UpdateTimerUI();
@@ -55,21 +56,21 @@ public class GameManager : MonoBehaviour
 
         foreach (var spawner in spawners)
         {
-            spawner.gameManager = this;
+            spawner.gameManager3 = this;
         }
 
         UpdateGameSettings
         (
-            6.5f,
-            5.5f,
-            4f,
-            0.75f,
-            7.5f,
-            15f,
-            50f,
-            5.5f,
-            4f,
-            9f
+            6.4f,
+            5.6f,
+            4.15f,
+            0.775f,
+            7.25f,
+            14.75f,
+            55f,
+            5.6f,
+            4.15f,
+            9.15f
         );
     }
 
@@ -90,6 +91,8 @@ public class GameManager : MonoBehaviour
         }
 
         UpdateWave();
+        
+        UpdateWaveUI();
     }
     
     public void AddBullet(BulletPlayerScript bullet)
@@ -189,11 +192,16 @@ public class GameManager : MonoBehaviour
         WaveTimeLeft.text = $"Time Left: {Mathf.Max(0, Mathf.FloorToInt(timeUntilNextWave))}";
     }
 
+    void UpdateWaveUI()
+    {
+        WaveText.text = "Wave: " + currentWave;
+    }
+
     void UpdateWave()
     {
         if (Player.Health >= 1 && timeUntilNextWave <= 0)
         {
-            SceneManager.LoadScene("Game2");
+            SceneManager.LoadScene("Game3");
         }
     }
 }

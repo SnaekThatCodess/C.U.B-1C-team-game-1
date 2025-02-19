@@ -256,11 +256,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c3f60a0c85e164c69ae457dcd46bb2f5, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: b477d06b53de1bc4a92c3eb988a17e88, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -354,8 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0fb957fd8774d7491bcc21bf752eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 9.36
-  StalkerHealth: 2
+  speed: 7
+  StalkerHealth: 1
   player: {fileID: 0}
   turret: {fileID: 5972914181284148102}
   anim: {fileID: 3566708995688357998}
@@ -365,6 +365,7 @@ MonoBehaviour:
   angle: 0
   pc: {fileID: 0}
   GM: {fileID: 0}
+  stalkerSfx: {fileID: 8300000, guid: b477d06b53de1bc4a92c3eb988a17e88, type: 3}
 --- !u!95 &3566708995688357998
 Animator:
   serializedVersion: 5

@@ -27,8 +27,7 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        audioSource.time = currentTime;
-        audioSource.Play();
+        HandleAudioForScene(SceneManager.GetActiveScene().name);
     }
 
     void Update()
@@ -41,11 +40,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (audioSource.isPlaying)
-        {
-            audioSource.time = currentTime;
-            audioSource.Play();
-        }
+        HandleAudioForScene(scene.name);
     }
 
     void OnEnable()
@@ -56,5 +51,23 @@ public class AudioManager : MonoBehaviour
     void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void HandleAudioForScene(string sceneName)
+    {
+        if (sceneName == "Start" || sceneName == "Tutorial1" || sceneName == "Tutorial2" || sceneName == "Tutorial3")
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.loop = true;
+                audioSource.time = currentTime;
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.loop = false;
+            audioSource.Stop();
+        }
     }
 }
